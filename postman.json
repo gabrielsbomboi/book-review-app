@@ -1,0 +1,241 @@
+{
+	"info": {
+		"_postman_id": "book-review-api-collection",
+		"name": "Book Review API",
+		"description": "Complete collection for testing Book Review API with all endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"testuser\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": ["{{base_url}}"],
+							"path": ["register"]
+						}
+					}
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.environment.set('auth_token', response.data.token);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"testuser\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": ["{{base_url}}"],
+							"path": ["login"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Books - General Access",
+			"item": [
+				{
+					"name": "Task 1: Get All Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/books",
+							"host": ["{{base_url}}"],
+							"path": ["books"]
+						}
+					}
+				},
+				{
+					"name": "Task 2: Get Book by ISBN",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/isbn/1",
+							"host": ["{{base_url}}"],
+							"path": ["isbn", "1"]
+						}
+					}
+				},
+				{
+					"name": "Task 3: Get Books by Author",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/author/jane",
+							"host": ["{{base_url}}"],
+							"path": ["author", "jane"]
+						}
+					}
+				},
+				{
+					"name": "Task 4: Get Books by Title",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/title/pride",
+							"host": ["{{base_url}}"],
+							"path": ["title", "pride"]
+						}
+					}
+				},
+				{
+					"name": "Task 5: Get Book Reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/review/1",
+							"host": ["{{base_url}}"],
+							"path": ["review", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Reviews - Authenticated",
+			"item": [
+				{
+					"name": "Task 8: Add/Modify Review",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"review\": \"This is an excellent book! Highly recommended reading.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/review/1",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "review", "1"]
+						}
+					}
+				},
+				{
+					"name": "Task 9: Delete Review",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/auth/review/1",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "review", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Async/Promise Endpoints",
+			"item": [
+				{
+					"name": "Task 10: Get Books (Async Callback)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/async/books",
+							"host": ["{{base_url}}"],
+							"path": ["async", "books"]
+						}
+					}
+				},
+				{
+					"name": "Task 11: Get Book by ISBN (Promise)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/promise/isbn/1",
+							"host": ["{{base_url}}"],
+							"path": ["promise", "isbn", "1"]
+						}
+					}
+				},
+				{
+					"name": "Task 12: Get Books by Author (Promise)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/promise/author/jane",
+							"host": ["{{base_url}}"],
+							"path": ["promise", "author", "jane"]
+						}
+					}
+				},
+				{
+					"name": "Task 13: Get Books by Title (Async/Await)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/async/title/pride",
+							"host": ["{{base_url}}"],
+							"path": ["async", "title", "pride"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000"
+		}
+	]
+}

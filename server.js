@@ -7,7 +7,7 @@ const bookRoutes = require('./routes/books');
 const asyncRoutes = require('./routes/async');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // Base Middleware
 app.use(cors());
